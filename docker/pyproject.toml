@@ -1,0 +1,30 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "fastapi-pagination-trim-extra-lines"
+version = "1.0.0"
+description = "Run: docker build . --tag fastapi-pagination-trim-extra-lines; docker run --rm fastapi-pagination-trim-extra-lines"
+authors = []
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi-pagination = "^0.12.14"
+pytest = "^8.1.1"
+SQLAlchemy = "^1.4.52"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--strict-config",
+    "--strict-markers",
+]
+filterwarnings = [
+    "error",
+    # This line works with leading '\n'!
+    #'ignore:\nPackage "sqlalchemy" is installed:fastapi_pagination.utils.FastAPIPaginationWarning',
+    # The asterisk '.*' doesn't match the first '\n' in the `_WARNING_MSG`.
+    'ignore:.*Package "sqlalchemy" is installed:fastapi_pagination.utils.FastAPIPaginationWarning',
+    # And the empty prefix also doesn't match the first '\n'.
+    'ignore:Package "sqlalchemy" is installed:fastapi_pagination.utils.FastAPIPaginationWarning',
+]
